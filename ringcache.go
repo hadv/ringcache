@@ -2,7 +2,6 @@ package ringcache
 
 import (
 	"errors"
-	"sync"
 )
 
 // EvictCallback is used to get a callback when a cache entry is evicted
@@ -19,7 +18,6 @@ type RingCache struct {
 	keys    []interface{}
 	items   map[interface{}]interface{}
 	onEvict EvictCallback
-	mu      sync.Mutex
 }
 
 // New creates a ring cache of the given size.
@@ -44,9 +42,6 @@ func NewWithEvict(maxSize int, onEvict EvictCallback) (*RingCache, error) {
 
 // Purge is used to completely clear the cache.
 func (c *RingCache) Purge() {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-
 	// evict all items
 	if c.onEvict != nil {
 		for _, k := range c.keys {
