@@ -59,6 +59,10 @@ func (c *RingCache) Purge() {
 
 // Add adds a value to the cache. Returns true if an eviction occurred.
 func (c *RingCache) Add(key, value interface{}) (evicted bool) {
+	// Do nothing if key or value is nil
+	if key == nil || value == nil {
+		return false
+	}
 	// Check for existing item
 	evicted = false
 	k := c.keys[c.next]

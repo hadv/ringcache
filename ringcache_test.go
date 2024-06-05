@@ -20,6 +20,7 @@ func TestCircularCache(t *testing.T) {
 		evicted := cache.Add(i, i)
 		require.False(t, evicted)
 	}
+	cache.Add(nil, nil)
 
 	// adding same key on the same position but no evict because the evict is nil
 	require.True(t, cache.Contains(1))
@@ -55,12 +56,6 @@ func TestCircularCache(t *testing.T) {
 
 	cache.Add(12, 12)
 	require.Equal(t, 1, cache.Len())
-
-	// Add/Get nil value
-	require.False(t, cache.Add(12, nil))
-	val, ok = cache.Get(12)
-	require.Nil(t, val)
-	require.False(t, ok)
 }
 
 func TestCircularCacheWithCallback(t *testing.T) {
