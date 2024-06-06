@@ -12,6 +12,10 @@ func TestCircularCache(t *testing.T) {
 	require.Nil(t, cache)
 	require.Error(t, err)
 
+	cache, err = New(0)
+	require.Nil(t, cache)
+	require.Error(t, err)
+
 	size := 10
 	cache, err = New(size)
 	require.NoError(t, err)
