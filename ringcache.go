@@ -27,8 +27,8 @@ func New(maxSize int) (*RingCache, error) {
 
 // NewWithEvict constructs ring cache of the given size with callback
 func NewWithEvict(maxSize int, onEvict EvictCallback) (*RingCache, error) {
-	if maxSize < 0 {
-		return nil, errors.New("must provide a non-negative size")
+	if maxSize <= 0 {
+		return nil, errors.New("cache size should be greater than zero")
 	}
 	c := &RingCache{
 		maxSize: maxSize,
