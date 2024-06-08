@@ -104,3 +104,11 @@ key2 not found
 key3 not found
 key4 not found
 ```
+
+License
+-------
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+Contributing
+------------
+Contributions are welcome! Please feel free to submit a pull request or open an issue if you encounter any problems or have any suggestions for improvements.
