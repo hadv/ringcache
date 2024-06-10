@@ -1,4 +1,5 @@
 [![Go](https://github.com/hadv/ringcache/actions/workflows/go.yml/badge.svg)](https://github.com/hadv/ringcache/actions/workflows/go.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A non-thread-safe ring cache, also known as a circular buffer, is a fixed-size data structure designed to efficiently handle a continuous stream of data by overwriting the oldest entries when new data is added and the buffer is full. This implementation ensures constant memory usage and provides O(1) time complexity for both adding and retrieving elements. However, it is not safe for concurrent use and should be used in single-threaded environments where predictable performance and efficient memory management are required.
 
