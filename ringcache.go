@@ -71,13 +71,10 @@ func (c *RingCache) Add(key, value interface{}) (evicted bool) {
 			c.onEvict(k, c.items[k])
 			evicted = true
 		}
-	}
-
-	size := c.Len()
-	c.items[key] = value
-	if size < c.Len() {
 		delete(c.items, k)
 	}
+
+	c.items[key] = value
 	c.keys[c.next] = key
 	c.next = (c.next + 1) % c.maxSize
 	return
