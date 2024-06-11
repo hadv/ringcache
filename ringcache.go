@@ -30,14 +30,14 @@ func NewWithEvict(maxSize int, onEvict EvictCallback) (*RingCache, error) {
 	if maxSize <= 0 {
 		return nil, errors.New("cache size should be greater than zero")
 	}
-	c := &RingCache{
+	cache := &RingCache{
 		maxSize: maxSize,
 		next:    0,
 		keys:    make([]interface{}, maxSize),
 		items:   make(map[interface{}]interface{}),
 		onEvict: onEvict,
 	}
-	return c, nil
+	return cache, nil
 }
 
 // Purge is used to completely clear the cache.
@@ -65,8 +65,7 @@ func (c *RingCache) Add(key, value interface{}) (evicted bool) {
 	}
 	// Check for existing item
 	evicted = false
-	k := c.keys[c.next]
-	if k != nil {
+	if k := c.keys[c.next]; k != nil {
 		if c.onEvict != nil {
 			c.onEvict(k, c.items[k])
 			evicted = true
