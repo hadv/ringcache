@@ -82,9 +82,6 @@ func (c *RingCache) Add(key, value interface{}) (evicted bool) {
 // Get looks up a key's value from the cache.
 func (c *RingCache) Get(key interface{}) (interface{}, bool) {
 	if value, ok := c.items[key]; ok {
-		if value == nil {
-			return nil, false
-		}
 		return value, ok
 	}
 	return nil, false
