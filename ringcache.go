@@ -81,10 +81,8 @@ func (c *RingCache) Add(key, value interface{}) (evicted bool) {
 
 // Get looks up a key's value from the cache.
 func (c *RingCache) Get(key interface{}) (interface{}, bool) {
-	if value, ok := c.items[key]; ok {
-		return value, ok
-	}
-	return nil, false
+	value, ok := c.items[key]
+	return value, ok
 }
 
 // Contains checks if a key is in the cache, without updating the recent-ness
@@ -105,10 +103,9 @@ func (c *RingCache) Remove(key interface{}) bool {
 				if c.onEvict != nil {
 					c.onEvict(key, val)
 				}
-				break
+				return true
 			}
 		}
-		return true
 	}
 	return false
 }
