@@ -37,6 +37,7 @@ func NewWithEvict(maxSize int, onEvict EvictCallback) (*RingCache, error) {
 		items:   make(map[interface{}]interface{}),
 		onEvict: onEvict,
 	}
+
 	return cache, nil
 }
 
@@ -59,12 +60,14 @@ func (c *RingCache) Purge() {
 
 // Add adds a value to the cache. Returns true if an eviction occurred.
 func (c *RingCache) Add(key, value interface{}) (evicted bool) {
+	evicted = false
+
 	// Do nothing if key or value is nil
 	if key == nil || value == nil {
-		return false
+		return
 	}
+
 	// Check for existing item
-	evicted = false
 	if k := c.keys[c.next]; k != nil {
 		if c.onEvict != nil {
 			c.onEvict(k, c.items[k])
@@ -76,12 +79,14 @@ func (c *RingCache) Add(key, value interface{}) (evicted bool) {
 	c.items[key] = value
 	c.keys[c.next] = key
 	c.next = (c.next + 1) % c.maxSize
+
 	return
 }
 
 // Get looks up a key's value from the cache.
 func (c *RingCache) Get(key interface{}) (interface{}, bool) {
 	value, ok := c.items[key]
+
 	return value, ok
 }
 
@@ -89,6 +94,7 @@ func (c *RingCache) Get(key interface{}) (interface{}, bool) {
 // or deleting it for being stale.
 func (c *RingCache) Contains(key interface{}) bool {
 	_, ok := c.items[key]
+
 	return ok
 }
 
@@ -103,10 +109,12 @@ func (c *RingCache) Remove(key interface{}) bool {
 				if c.onEvict != nil {
 					c.onEvict(key, val)
 				}
+
 				return true
 			}
 		}
 	}
+
 	return false
 }
 
