@@ -5,7 +5,7 @@ import (
 )
 
 // EvictCallback is used to get a callback when a cache entry is evicted
-type EvictCallback func(key interface{}, value interface{})
+type EvictCallback func(key, value interface{})
 
 // RingCache, often known as a circular buffer or ring buffer, is a data
 // structure that uses a single, fixed-size buffer as if it were connected

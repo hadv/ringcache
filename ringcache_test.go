@@ -67,7 +67,7 @@ func TestCircularCacheWithCallback(t *testing.T) {
 	size := 10
 	evictedKey := 0
 	evictedVal := 0
-	cache, err := NewWithEvict(size, func(key interface{}, value interface{}) {
+	cache, err := NewWithEvict(size, func(key, value interface{}) {
 		require.Equal(t, evictedKey, key)
 		require.Equal(t, evictedVal, value)
 	})
@@ -131,7 +131,7 @@ func TestCircularCachePurgeWithCallback(t *testing.T) {
 	t.Parallel()
 	size := 100
 	evictedCount := 0
-	cache, err := NewWithEvict(size, func(key interface{}, value interface{}) {
+	cache, err := NewWithEvict(size, func(key, value interface{}) {
 		evictedCount++
 	})
 	require.NoError(t, err)
@@ -165,7 +165,7 @@ func run(b *testing.B, cache *RingCache) {
 
 func benchmarkSizeWithCallback(b *testing.B, size int) {
 	b.Helper()
-	cache, err := NewWithEvict(size, func(key interface{}, value interface{}) {})
+	cache, err := NewWithEvict(size, func(key, value interface{}) {})
 	require.NoError(b, err)
 	require.NotNil(b, cache)
 	require.Equal(b, 0, cache.Len())
